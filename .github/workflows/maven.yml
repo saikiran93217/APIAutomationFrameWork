@@ -1,12 +1,14 @@
 
-name: API Test FrameWork
+name: API Test Framework
 
 on:
   push:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
-
+  schedule:
+    - cron: 00 18 * * *
+    - cron: 00 3 * * *
 jobs:
   build:
 
@@ -22,6 +24,13 @@ jobs:
         cache: maven
     - name: Execute Tests
       run: mvn clean test -Dsuite=suite -X
+    - name: Upload a Build Artifact
+      uses: actions/upload-artifact@v4.6.2
+      with:
+        name: Logs
+        path: logs/
+        
+      
 
 
   
